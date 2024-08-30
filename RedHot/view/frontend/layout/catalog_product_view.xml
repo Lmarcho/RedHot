@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- For Configurable/Bundle/Group Products -->
+        <referenceContainer name="product.info.options.wrapper">
+            <block class="Ef\RedHot\Block\Product\View\RedHotCounter" name="redhot.counter.configurable" template="Ef_RedHot::product/view/redhotcounter.phtml" after="-"/>
+        </referenceContainer>
+
+        <!-- For Simple Products -->
+        <referenceContainer name="product.info.form.content">
+            <block class="Ef\RedHot\Block\Product\View\RedHotCounter" name="redhot.counter" template="Ef_RedHot::product/view/redhotcounter.phtml" before="-"/>
+        </referenceContainer>
+    </body>
+</page>
