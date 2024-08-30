@@ -35,13 +35,11 @@ class RedHotCounter extends Template
                 case 'virtual':
                 case 'downloadable':
                 case 'grouped':
+                case 'bundle':
                     return $this->getSingleProductRedHotCount($product);
 
                 case 'configurable':
                     return $this->getConfigurableProductRedHotCount($product);
-
-                case 'bundle':
-                    return $this->getBundleProductRedHotCount($product);
 
                 default:
                     return 0;
@@ -66,25 +64,6 @@ class RedHotCounter extends Template
         foreach ($childProducts as $child) {
             if ($child->getData('red_hot')) {
                 $totalCount += $this->getProductRedHotCount($child->getSku());
-            }
-        }
-
-        return $totalCount;
-    }
-
-    protected function getBundleProductRedHotCount($product)
-    {
-        $selectionCollection = $product->getTypeInstance()->getSelectionsCollection(
-            $product->getTypeInstance()->getOptionsIds($product),
-            $product
-        );
-
-        $totalCount = 0;
-
-        foreach ($selectionCollection as $selection) {
-            $childProduct = $this->productRepository->getById($selection->getProductId());
-            if ($childProduct->getData('red_hot')) {
-                $totalCount += $this->getProductRedHotCount($childProduct->getSku());
             }
         }
 

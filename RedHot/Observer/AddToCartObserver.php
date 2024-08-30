@@ -20,11 +20,18 @@ class AddToCartObserver implements ObserverInterface
     public function execute(Observer $observer)
     {
         $product = $observer->getEvent()->getProduct();
+        $sku = $product->getSku();
+
+        // Check if the product is a bundle
+        if ($product->getTypeId() == 'bundle') {
+            // Use the main product SKU instead of the complex SKU
+            $sku = $product->getData()['sku'];
+        }
+
         if ($product->getData('red_hot')) {
             $connection = $this->resource->getConnection();
             $tableName = $this->resource->getTableName('ef_redhot_product_count');
 
-            $sku = $product->getSku();
             $select = $connection->select()->from($tableName, 'add_to_cart_count')->where('sku = ?', $sku);
             $count = $connection->fetchOne($select);
 
