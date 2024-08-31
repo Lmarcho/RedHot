@@ -1,17 +1,16 @@
 <?php
 
-namespace Ef\RedHot\Block\Product\View;
+namespace Ef\RedHot\Block\Product;
 
-use Magento\Framework\View\Element\Template;
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Block\Product\View as MagentoProductView;
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\Registry;
 
 /**
- * Class RedHotCounter
- * Handles the logic to retrieve and display the "Red Hot" product count.
+ * Class View
+ * Extends the Magento product view block to include "Red Hot" product count functionality.
  */
-class RedHotCounter extends Template
+class View extends MagentoProductView
 {
     /**
      * @var ProductRepositoryInterface
@@ -24,30 +23,50 @@ class RedHotCounter extends Template
     protected $resource;
 
     /**
-     * @var Registry
-     */
-    protected $_registry;
-
-    /**
-     * RedHotCounter constructor.
+     * View constructor.
      *
-     * @param Template\Context $context
+     * @param \Magento\Catalog\Block\Product\Context $context
+     * @param \Magento\Framework\Url\EncoderInterface $urlEncoder
+     * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
+     * @param \Magento\Framework\Stdlib\StringUtils $string
+     * @param \Magento\Catalog\Helper\Product $productHelper
+     * @param \Magento\Catalog\Model\ProductTypes\ConfigInterface $productTypeConfig
+     * @param \Magento\Framework\Locale\FormatInterface $localeFormat
+     * @param \Magento\Customer\Model\Session $customerSession
      * @param ProductRepositoryInterface $productRepository
+     * @param \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency
      * @param ResourceConnection $resource
-     * @param Registry $registry
      * @param array $data
      */
     public function __construct(
-        Template\Context $context,
+        \Magento\Catalog\Block\Product\Context $context,
+        \Magento\Framework\Url\EncoderInterface $urlEncoder,
+        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
+        \Magento\Framework\Stdlib\StringUtils $string,
+        \Magento\Catalog\Helper\Product $productHelper,
+        \Magento\Catalog\Model\ProductTypes\ConfigInterface $productTypeConfig,
+        \Magento\Framework\Locale\FormatInterface $localeFormat,
+        \Magento\Customer\Model\Session $customerSession,
         ProductRepositoryInterface $productRepository,
+        \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency,
         ResourceConnection $resource,
-        Registry $registry,
         array $data = []
     ) {
         $this->productRepository = $productRepository;
         $this->resource = $resource;
-        $this->_registry = $registry;
-        parent::__construct($context, $data);
+        parent::__construct(
+            $context,
+            $urlEncoder,
+            $jsonEncoder,
+            $string,
+            $productHelper,
+            $productTypeConfig,
+            $localeFormat,
+            $customerSession,
+            $productRepository,
+            $priceCurrency,
+            $data
+        );
     }
 
     /**
@@ -126,15 +145,5 @@ class RedHotCounter extends Template
         $count = $connection->fetchOne($select);
 
         return $count !== false ? $count : 0;
-    }
-
-    /**
-     * Retrieve the current product from the registry.
-     *
-     * @return \Magento\Catalog\Model\Product|null
-     */
-    public function getProduct()
-    {
-        return $this->_registry->registry('current_product');
     }
 }
