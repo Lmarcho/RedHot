@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="ef_redhot_product_count" resource="default" engine="innodb" comment="RedHot Product Add to Cart Count Table">
-        <column xsi:type="text" name="sku" nullable="false" length="64" comment="Product SKU"/>
+        <column xsi:type="varchar" name="sku" nullable="false" length="64" comment="Product SKU"/>
         <column xsi:type="int" name="add_to_cart_count" nullable="false" default="0" comment="Add to Cart Count"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="sku"/>

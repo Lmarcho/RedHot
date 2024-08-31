@@ -1,15 +1,11 @@
 <?php
 use \Ef\RedHot\Block\Product\View\RedHotCounter;
-use \Magento\Framework\Escaper;
 
 /** @var RedHotCounter $block */
-/** @var Escaper $escaper */
 
-$escaper = $block->getEscaper();
 $redHotCount = $block->getRedHotCount();
-
 if ($redHotCount > 0): ?>
     <div class="red-hot-counter">
-        <?= $escaper->escapeHtml(__('{} customers love this product!', $redHotCount)) ?>
+        <?= __('%1 customers love this product!', /* @noEscape */ $redHotCount) ?>
     </div>
 <?php endif; ?>
