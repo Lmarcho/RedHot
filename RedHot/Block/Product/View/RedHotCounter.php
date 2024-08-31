@@ -7,12 +7,36 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Registry;
 
+/**
+ * Class RedHotCounter
+ * Handles the logic to retrieve and display the "Red Hot" product count.
+ */
 class RedHotCounter extends Template
 {
+    /**
+     * @var ProductRepositoryInterface
+     */
     protected $productRepository;
+
+    /**
+     * @var ResourceConnection
+     */
     protected $resource;
+
+    /**
+     * @var Registry
+     */
     protected $_registry;
 
+    /**
+     * RedHotCounter constructor.
+     *
+     * @param Template\Context $context
+     * @param ProductRepositoryInterface $productRepository
+     * @param ResourceConnection $resource
+     * @param Registry $registry
+     * @param array $data
+     */
     public function __construct(
         Template\Context $context,
         ProductRepositoryInterface $productRepository,
@@ -26,6 +50,11 @@ class RedHotCounter extends Template
         parent::__construct($context, $data);
     }
 
+    /**
+     * Get the "Red Hot" count for the current product.
+     *
+     * @return int
+     */
     public function getRedHotCount()
     {
         $product = $this->getProduct();
@@ -48,6 +77,12 @@ class RedHotCounter extends Template
         return 0;
     }
 
+    /**
+     * Get the "Red Hot" count for a single product.
+     *
+     * @param \Magento\Catalog\Model\Product $product
+     * @return int
+     */
     protected function getSingleProductRedHotCount($product)
     {
         if ($product->getData('red_hot')) {
@@ -56,6 +91,12 @@ class RedHotCounter extends Template
         return 0;
     }
 
+    /**
+     * Get the "Red Hot" count for a configurable product.
+     *
+     * @param \Magento\Catalog\Model\Product $product
+     * @return int
+     */
     protected function getConfigurableProductRedHotCount($product)
     {
         $childProducts = $product->getTypeInstance()->getUsedProducts($product);
@@ -70,6 +111,12 @@ class RedHotCounter extends Template
         return $totalCount;
     }
 
+    /**
+     * Retrieve the "Red Hot" count for a product by SKU.
+     *
+     * @param string $sku
+     * @return int
+     */
     protected function getProductRedHotCount($sku)
     {
         $connection = $this->resource->getConnection();
@@ -81,6 +128,11 @@ class RedHotCounter extends Template
         return $count !== false ? $count : 0;
     }
 
+    /**
+     * Retrieve the current product from the registry.
+     *
+     * @return \Magento\Catalog\Model\Product|null
+     */
     public function getProduct()
     {
         return $this->_registry->registry('current_product');

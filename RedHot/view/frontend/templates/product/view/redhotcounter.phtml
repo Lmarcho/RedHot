@@ -6,6 +6,6 @@ use \Ef\RedHot\Block\Product\View\RedHotCounter;
 $redHotCount = $block->getRedHotCount();
 if ($redHotCount > 0): ?>
     <div class="red-hot-counter">
-        <?= __('%1 customers love this product!', $redHotCount) ?>
+        <?= __('%1 customers love this product!', /* @noEscape */ $redHotCount) ?>
     </div>
 <?php endif; ?>

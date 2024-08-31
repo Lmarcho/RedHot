@@ -5,18 +5,35 @@ namespace Ef\RedHot\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\App\ResourceConnection;
-use Magento\Catalog\Model\Product;
 
+/**
+ * Class AddToCartObserver
+ * Observer to track and increment the count of Red Hot products added to the cart.
+ */
 class AddToCartObserver implements ObserverInterface
 {
+    /**
+     * @var ResourceConnection
+     */
     protected $resource;
 
+    /**
+     * AddToCartObserver constructor.
+     *
+     * @param ResourceConnection $resource
+     */
     public function __construct(
         ResourceConnection $resource
     ) {
         $this->resource = $resource;
     }
 
+    /**
+     * Execute the observer to update the add-to-cart count for Red Hot products.
+     *
+     * @param Observer $observer
+     * @return void
+     */
     public function execute(Observer $observer)
     {
         $product = $observer->getEvent()->getProduct();
