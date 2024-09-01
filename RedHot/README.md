@@ -64,8 +64,3 @@ The module creates a table `ef_redhot_product_count` to track the number of time
 ## License
 
 This module is open-source and licensed under the [MIT License](LICENSE).
-
-## Support
-
-For issues or questions, please open an issue on the [GitHub repository](#).
-
